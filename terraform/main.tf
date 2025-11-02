@@ -38,13 +38,25 @@ module "cognito" {
   tags = local.common_tags
 }
 
-# DynamoDB Tables Module (coming next)
-# module "dynamodb" {
-#   source = "./modules/dynamodb"
-#   
-#   project_name = var.project_name
-#   environment  = var.environment
-#   billing_mode = var.dynamodb_billing_mode
-#   
-#   tags = local.common_tags
+# DynamoDB Tables Module
+module "dynamodb" {
+  source = "./modules/dynamodb"
+  
+  project_name = var.project_name
+  environment  = var.environment
+  billing_mode = var.dynamodb_billing_mode
+  
+  tags = local.common_tags
+}
+
+# Lambda Functions Module (coming next)
+# module "lambda" {
+#   source = "./modules/lambda"
+#   ...
+# }
+
+# API Gateway Module (coming next)
+# module "api_gateway" {
+#   source = "./modules/api-gateway"
+#   ...
 # }

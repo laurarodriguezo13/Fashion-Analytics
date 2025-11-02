@@ -47,12 +47,26 @@ output "cognito_test_users" {
   sensitive   = true
 }
 
-# DynamoDB Outputs (coming next)
-# output "dynamodb_tables" {
-#   description = "Names of DynamoDB tables"
-#   value = {
-#     trends    = module.dynamodb.trends_table_name
-#     sales     = module.dynamodb.sales_analytics_table_name
-#     sentiment = module.dynamodb.sentiment_table_name
-#   }
-# }
+# =============================================================================
+# DYNAMODB OUTPUTS
+# =============================================================================
+
+output "dynamodb_tables" {
+  description = "Names of all DynamoDB tables"
+  value       = module.dynamodb.all_table_names
+}
+
+output "trends_table_name" {
+  description = "Name of the Fashion Trends table"
+  value       = module.dynamodb.trends_table_name
+}
+
+output "sales_analytics_table_name" {
+  description = "Name of the Sales Analytics table"
+  value       = module.dynamodb.sales_analytics_table_name
+}
+
+output "sentiment_table_name" {
+  description = "Name of the Brand Sentiment table"
+  value       = module.dynamodb.sentiment_table_name
+}
