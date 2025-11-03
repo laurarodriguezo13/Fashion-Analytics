@@ -1,0 +1,19 @@
+brand,date,sentiment_score,mention_count,positive_mentions,negative_mentions,neutral_mentions,trending_topics
+Nike,2025-01-20,78.5,15420,12100,3320,8200,sustainability innovation
+Nike,2025-01-19,77.8,14890,11580,3310,7950,new releases quality
+Nike,2025-01-18,79.2,16100,12750,3350,8420,athlete partnerships
+Adidas,2025-01-20,76.2,12340,9395,2945,7180,retro styles comfort
+Adidas,2025-01-19,75.8,11980,9080,2900,6950,collaboration drops
+Adidas,2025-01-18,77.1,12890,9920,2970,7450,sustainable materials
+Zara,2025-01-20,82.1,18750,15400,3350,10200,fast fashion trends
+Zara,2025-01-19,81.5,18200,14840,3360,9880,affordable style
+Zara,2025-01-18,83.0,19320,16040,3280,10560,new collections
+H&M,2025-01-20,71.5,14200,10150,4050,7820,sustainability concerns
+H&M,2025-01-19,72.3,13890,10040,3850,7650,affordable fashion
+H&M,2025-01-18,70.8,14580,10320,4260,8010,quality issues
+Lululemon,2025-01-20,85.3,8920,7610,1310,5240,quality activewear
+Lululemon,2025-01-19,84.9,8650,7340,1310,5080,community events
+Lululemon,2025-01-18,86.1,9280,7990,1290,5450,innovation comfort
+Mango,2025-01-20,74.2,6830,5070,1760,3950,European style
+Mango,2025-01-19,73.8,6590,4860,1730,3820,seasonal collections
+Mango,2025-01-18,75.1,7120,5340,1780,4130,quality fabrics

@@ -1,0 +1,19 @@
+category,date,trend_name,popularity_score,growth_rate,region,description
+Dresses,2025-01-20,Floral Prints,87,15.5,North America,Romantic floral patterns dominating spring collections
+Dresses,2025-01-19,Midi Length,82,12.3,Europe,Mid-calf length gaining popularity
+Dresses,2025-01-18,Pastel Colors,78,9.8,Global,Soft pastel tones trending
+Outerwear,2025-01-20,Oversized Blazers,92,22.3,Global,Structured oversized silhouettes
+Outerwear,2025-01-19,Leather Jackets,85,18.7,North America,Classic leather styles resurging
+Outerwear,2025-01-18,Trench Coats,80,14.2,Europe,Timeless trench making comeback
+Footwear,2025-01-20,Chunky Sneakers,88,19.1,Asia,Bold platform sneakers trending
+Footwear,2025-01-19,Ballet Flats,75,10.5,Europe,Elegant ballet flats returning
+Footwear,2025-01-18,Ankle Boots,81,13.8,Global,Versatile ankle boot styles
+Accessories,2025-01-20,Mini Bags,83,16.4,Global,Tiny handbags still popular
+Accessories,2025-01-19,Statement Earrings,79,11.7,North America,Bold earring designs
+Accessories,2025-01-18,Silk Scarves,72,8.9,Europe,Elegant silk accessories
+Tops,2025-01-20,Puff Sleeves,86,17.3,Global,Dramatic sleeve details
+Tops,2025-01-19,Crop Tops,77,12.1,North America,Cropped silhouettes popular
+Tops,2025-01-18,Silk Blouses,74,9.4,Europe,Luxe silk fabrics trending
+Bottoms,2025-01-20,Wide Leg Pants,84,15.8,Global,Flowing wide leg styles
+Bottoms,2025-01-19,High Waist Jeans,89,20.2,North America,High rise denim dominant
+Bottoms,2025-01-18,Leather Pants,76,11.3,Europe,Edgy leather bottoms
