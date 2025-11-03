@@ -70,3 +70,32 @@ output "sentiment_table_name" {
   description = "Name of the Brand Sentiment table"
   value       = module.dynamodb.sentiment_table_name
 }
+
+# =============================================================================
+# LAMBDA OUTPUTS
+# =============================================================================
+
+output "lambda_functions" {
+  description = "Map of all Lambda function names"
+  value       = module.lambda.all_lambda_functions
+}
+
+output "get_trends_function_name" {
+  description = "Name of the GetTrends Lambda function"
+  value       = module.lambda.get_trends_function_name
+}
+
+output "get_sales_analytics_function_name" {
+  description = "Name of the GetSalesAnalytics Lambda function"
+  value       = module.lambda.get_sales_analytics_function_name
+}
+
+output "get_sentiment_function_name" {
+  description = "Name of the GetSentiment Lambda function"
+  value       = module.lambda.get_sentiment_function_name
+}
+
+output "export_data_function_name" {
+  description = "Name of the ExportData Lambda function"
+  value       = module.lambda.export_data_function_name
+}
