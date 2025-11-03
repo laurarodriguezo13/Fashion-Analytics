@@ -99,3 +99,17 @@ output "export_data_function_name" {
   description = "Name of the ExportData Lambda function"
   value       = module.lambda.export_data_function_name
 }
+
+# =============================================================================
+# API GATEWAY OUTPUTS
+# =============================================================================
+
+output "api_gateway_url" {
+  description = "Base URL for API Gateway"
+  value       = module.api_gateway.api_endpoint
+}
+
+output "api_endpoints" {
+  description = "Map of all API endpoints"
+  value       = module.api_gateway.endpoints
+}

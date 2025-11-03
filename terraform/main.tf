@@ -1,7 +1,5 @@
 # Fashion Analytics Dashboard - Main Terraform Configuration
-# AWS Academy Learner Lab Deployment
 
-# Local variables for resource naming
 locals {
   name_prefix = "${var.project_name}-${var.environment}"
   
@@ -49,14 +47,35 @@ module "dynamodb" {
   tags = local.common_tags
 }
 
-# Lambda Functions Module (coming next)
-# module "lambda" {
-#   source = "./modules/lambda"
-#   ...
-# }
+# Lambda Functions Module
+module "lambda" {
+  source = "./modules/lambda"
+  
+  project_name = var.project_name
+  environment  = var.environment
+  
+  dynamodb_tables = module.dynamodb.all_table_names
+  
+  tags = local.common_tags
+}
 
-# API Gateway Module (coming next)
-# module "api_gateway" {
-#   source = "./modules/api-gateway"
-#   ...
-# }
+# API Gateway Module
+module "api_gateway" {
+  source = "./modules/api-gateway"
+  
+  project_name = var.project_name
+  environment  = var.environment
+  
+  lambda_functions = {
+    get_trends_invoke_arn          = module.lambda.get_trends_invoke_arn
+    get_sales_analytics_invoke_arn = module.lambda.get_sales_analytics_invoke_arn
+    get_sentiment_invoke_arn       = module.lambda.get_sentiment_invoke_arn
+    export_data_invoke_arn         = module.lambda.export_data_invoke_arn
+    get_trends_function_name          = module.lambda.get_trends_function_name
+    get_sales_analytics_function_name = module.lambda.get_sales_analytics_function_name
+    get_sentiment_function_name       = module.lambda.get_sentiment_function_name
+    export_data_function_name         = module.lambda.export_data_function_name
+  }
+  
+  tags = local.common_tags
+}
