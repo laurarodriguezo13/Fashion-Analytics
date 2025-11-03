@@ -29,7 +29,7 @@ def convert_to_decimal(value):
 
 def populate_trends_table(table_name):
     """Populate Fashion Trends table"""
-    print(f"\n📊 Populating {table_name}...")
+    print(f"\n Populating {table_name}...")
     
     table = dynamodb.Table(table_name)
     data = load_csv('../data/sample-data/trends.csv')
@@ -44,7 +44,7 @@ def populate_trends_table(table_name):
         count += 1
         print(f"  ✓ Added: {item['category']} - {item['trend_name']}")
     
-    print(f"✅ Added {count} trends to {table_name}")
+    print(f"Added {count} trends to {table_name}")
 
 def populate_sales_table(table_name):
     """Populate Sales Analytics table"""
@@ -66,11 +66,11 @@ def populate_sales_table(table_name):
         count += 1
         print(f"  ✓ Added: {item['brand']} - {item['month']}")
     
-    print(f"✅ Added {count} sales records to {table_name}")
+    print(f"Added {count} sales records to {table_name}")
 
 def populate_sentiment_table(table_name):
     """Populate Brand Sentiment table"""
-    print(f"\n💬 Populating {table_name}...")
+    print(f"\n Populating {table_name}...")
     
     table = dynamodb.Table(table_name)
     data = load_csv('../data/sample-data/sentiment.csv')
@@ -88,11 +88,11 @@ def populate_sentiment_table(table_name):
         count += 1
         print(f"  ✓ Added: {item['brand']} - {item['date']}")
     
-    print(f"✅ Added {count} sentiment records to {table_name}")
+    print(f"Added {count} sentiment records to {table_name}")
 
 def main():
     """Main function"""
-    print("🚀 Starting DynamoDB population...")
+    print("Starting DynamoDB population...")
     print("=" * 60)
     
     # Table names (update if different)
@@ -107,17 +107,17 @@ def main():
         populate_sentiment_table(sentiment_table)
         
         print("\n" + "=" * 60)
-        print("🎉 Successfully populated all DynamoDB tables!")
+        print("Successfully populated all DynamoDB tables!")
         print("=" * 60)
         
         # Summary
-        print("\n📈 Summary:")
+        print("\n Summary:")
         print(f"  • Trends table: {trends_table}")
         print(f"  • Sales table: {sales_table}")
         print(f"  • Sentiment table: {sentiment_table}")
         
     except Exception as e:
-        print(f"\n❌ Error: {str(e)}")
+        print(f"\n Error: {str(e)}")
         sys.exit(1)
 
 if __name__ == '__main__':
