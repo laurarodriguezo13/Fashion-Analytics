@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Analytics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+        }
+
+        .control-group select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #232F3E;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .trend-item {
+            padding: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .trend-item h3 {
+            color: #232F3E;
+            margin-bottom: 5px;
+        }
+
+        .trend-score {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .error {
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Fashion Analytics Dashboard</h1>
+            <p>Real-time insights into fashion trends, sales, and sentiment</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Category:</label>
+                <select id="categorySelect">
+                    <option value="Dresses">Dresses</option>
+                    <option value="Outerwear">Outerwear</option>
+                    <option value="Footwear">Footwear</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Tops">Tops</option>
+                    <option value="Bottoms">Bottoms</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Brand:</label>
+                <select id="brandSelect">
+                    <option value="Nike">Nike</option>
+                    <option value="Adidas">Adidas</option>
+                    <option value="Zara">Zara</option>
+                    <option value="H&M">H&M</option>
+                    <option value="Lululemon">Lululemon</option>
+                    <option value="Mango">Mango</option>
+                </select>
+            </div>
+            <button onclick="loadData()">🔄 Refresh Data</button>
+        </div>
+
+        <div id="error"></div>
+        <div id="loading" class="loading" style="display: none;">Loading...</div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>📈 Fashion Trends</h2>
+                <div id="trendsContent"></div>
+            </div>
+
+            <div class="card">
+                <h2>💰 Sales Performance</h2>
+                <div id="salesContent"></div>
+            </div>
+
+            <div class="card">
+                <h2>💬 Brand Sentiment</h2>
+                <div id="sentimentContent"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Fashion Analytics Dashboard • Powered by AWS Serverless</p>
+            <p id="lastUpdate"></p>
+        </footer>
+    </div>
+
+    <script>
+        const API_URL = 'https://zwcdb4lwv3.execute-api.us-east-1.amazonaws.com/dev';
+
+        async function loadData() {
+            const category = document.getElementById('categorySelect').value;
+            const brand = document.getElementById('brandSelect').value;
+            
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').innerHTML = '';
+
+            try {
+                // Fetch trends
+                const trendsRes = await fetch(`${API_URL}/trends?category=${category}&limit=5`);
+                const trendsData = await trendsRes.json();
+                const trends = typeof trendsData.body === 'string' ? JSON.parse(trendsData.body) : trendsData;
+                
+                // Fetch sales
+                const salesRes = await fetch(`${API_URL}/sales-analytics?brand=${brand}&limit=3`);
+                const salesData = await salesRes.json();
+                const sales = typeof salesData.body === 'string' ? JSON.parse(salesData.body) : salesData;
+                
+                // Fetch sentiment
+                const sentimentRes = await fetch(`${API_URL}/sentiment?brand=${brand}&limit=3`);
+                const sentimentData = await sentimentRes.json();
+                const sentiment = typeof sentimentData.body === 'string' ? JSON.parse(sentimentData.body) : sentimentData;
+
+                // Display trends
+                const trendsHTML = trends.trends.map(trend => `
+                    <div class="trend-item">
+                        <h3>${trend.trend_name}</h3>
+                        <p><strong>Region:</strong> ${trend.region}</p>
+                        <p>${trend.description}</p>
+                        <p class="trend-score">${trend.popularity_score}</p>
+                        <p style="color: #00C853;">+${trend.growth_rate}% growth</p>
+                    </div>
+                `).join('');
+                document.getElementById('trendsContent').innerHTML = trendsHTML;
+
+                // Display sales
+                const salesHTML = sales.analytics.map(s => `
+                    <div class="trend-item">
+                        <h3>${s.month}</h3>
+                        <p><strong>Revenue:</strong> $${s.revenue.toLocaleString()}</p>
+                        <p><strong>Units Sold:</strong> ${s.units_sold.toLocaleString()}</p>
+                        <p><strong>Avg Price:</strong> $${s.avg_price}</p>
+                        <p><strong>Margin:</strong> ${s.gross_margin}%</p>
+                    </div>
+                `).join('');
+                document.getElementById('salesContent').innerHTML = salesHTML;
+
+                // Display sentiment
+                const sentimentHTML = sentiment.sentiment.map(s => `
+                    <div class="trend-item">
+                        <h3>${s.date}</h3>
+                        <p class="trend-score">${s.sentiment_score}</p>
+                        <p><strong>Mentions:</strong> ${s.mention_count.toLocaleString()}</p>
+                        <p style="color: #00C853;">✓ Positive: ${s.positive_mentions}</p>
+                        <p style="color: #F44336;">✗ Negative: ${s.negative_mentions}</p>
+                        <p><strong>Topics:</strong> ${s.trending_topics}</p>
+                    </div>
+                `).join('');
+                document.getElementById('sentimentContent').innerHTML = sentimentHTML;
+
+                document.getElementById('lastUpdate').textContent = 'Last updated: ' + new Date().toLocaleString();
+
+            } catch (error) {
+                document.getElementById('error').innerHTML = `
+                    <div class="error">
+                        <strong>Error loading data:</strong> ${error.message}
+                    </div>
+                `;
+                console.error('Error:', error);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Load data on page load
+        window.addEventListener('load', loadData);
+
+        // Reload when selections change
+        document.getElementById('categorySelect').addEventListener('change', loadData);
+        document.getElementById('brandSelect').addEventListener('change', loadData);
+    </script>
+</body>
+</html>
